@@ -75,7 +75,9 @@ em { font-style: italic; }
 }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; height: 100vh; height: 100svh; background: var(--night); }
+.hero { position: relative; height: 100vh; height: 100lvh; background: var(--night); }
+/* Fondo oscuro bajo el hero fijado: evita ver la sección siguiente si la ventana crece en móvil */
+.pin-spacer:has(> .hero) { background: var(--night); }
 .hero__stage { position: relative; height: 100%; overflow: hidden; }
 /* Plano del hero: misma imagen en 3 capas (oscura, iluminada por la espada, brillo) */
 .shot {
@@ -462,3 +464,9 @@ em { font-style: italic; }
 .relic-dialog dl { margin: 0; display: grid; gap: 4px; }
 .relic-dialog dt { margin-top: 12px; font: 500 12px/1 var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: #8fd0ec; }
 .relic-dialog dd { margin: 0; color: #d6dcd9; line-height: 1.55; }
+
+/* Entrada de la ventana de reliquias con CSS */
+.relic-dialog[open] { animation: relic-pop .4s cubic-bezier(.34, 1.56, .64, 1); }
+.relic-dialog[open]::backdrop { animation: relic-fade .3s ease-out; }
+@keyframes relic-pop { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+@keyframes relic-fade { from { opacity: 0; } to { opacity: 1; } }

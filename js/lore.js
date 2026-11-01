@@ -349,8 +349,8 @@
         <dt>Poder</dt><dd>${r.power}</dd>
         <dt>Aparece en</dt><dd>${r.games}</dd>
       </dl>`;
+    // Sin GSAP sobre el <dialog>: al medir transformaciones lo saca del DOM un instante y pierde el modo modal.
     dlg.showModal();
-    anim(() => gsap.from(dlg, { scale: 0.92, opacity: 0, duration: 0.4, ease: "back.out(1.6)" }));
   }));
   dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
 

@@ -83,6 +83,8 @@
 
   if (typeof gsap === "undefined") return;
   gsap.registerPlugin(ScrollTrigger);
+  // En móvil la barra del navegador cambia la altura de la ventana: no recalcular el pin por eso.
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   // La imagen aparece desde negro al cargar.
   const img = document.querySelector(".shot__lit");
