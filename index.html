@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hyrule · Crónicas interactivas</title>
+  <meta name="description" content="Web fan interactiva sobre el lore de The Legend of Zelda: Trifuerza, cronología, mapa y personajes.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath fill='%23e8c25a' d='M12 1 18 11H6Z M6 11l6 10H0Z M18 11l6 10H12Z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a class="skip" href="#trifuerza">Saltar al contenido</a>
+
+  <nav class="nav" aria-label="Principal">
+    <a class="nav__brand" href="#inicio" aria-label="Inicio">
+      <svg viewBox="0 0 24 22" aria-hidden="true"><path d="M12 1 18 11H6Z M6 11l6 10H0Z M18 11l6 10H12Z"/></svg>
+    </a>
+    <a href="#origen">Origen</a>
+    <a href="#cronologia">Cronología</a>
+    <a href="#pueblos">Pueblos</a>
+    <a href="#mapa">Mapa</a>
+    <a href="#reliquias">Reliquias</a>
+    <a href="#personajes">Personajes</a>
+    <a class="nav__cta" href="#test">Test</a>
+    <button class="sound" type="button" data-sound-toggle aria-pressed="false" aria-label="Activar o silenciar sonido">
+      <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    </button>
+  </nav>
+
+  <!-- ============ HERO: Link desenvaina con el scroll ============ -->
+  <section class="hero" id="inicio" aria-label="Introducción">
+    <div class="hero__stage">
+
+      <!-- Para cambiar la imagen: sustituye assets/hero/link.jpg (16:9, fondo negro) y ajusta
+           --sx (centro de la hoja), --hilt (altura de la guarda) y --face (altura de la cara), en % de la imagen. -->
+      <div class="shot" aria-hidden="true" style="--sx: 50; --hilt: 56; --face: 26;">
+        <div class="shot__tilt">
+          <img class="shot__base" src="assets/hero/link.jpg" alt="" width="1678" height="937" fetchpriority="high">
+          <img class="shot__lit" src="assets/hero/link.jpg" alt="" width="1678" height="937">
+          <img class="shot__glow" src="assets/hero/link.jpg" alt="" width="1678" height="937">
+          <span class="shot__core"></span>
+        </div>
+      </div>
+      <canvas class="dust" aria-hidden="true"></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="flash" aria-hidden="true"></div>
+
+      <div class="hero__intro">
+        <p class="eyebrow">Una enciclopedia fan e interactiva</p>
+        <h1 class="hero__title">Hyrule</h1>
+        <p class="hero__lead">Diez mil años de leyenda contados en un solo scroll.</p>
+        <button class="btn btn--outline btn--light hero__sound" type="button" data-sound-toggle aria-pressed="false">
+          <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span data-sound-label>Activar sonido</span>
+        </button>
+      </div>
+
+      <p class="hero__hint" aria-hidden="true"><span></span>Desliza para desenvainar</p>
+
+      <div class="hero__final">
+        <h2>La leyenda despierta.</h2>
+        <a class="btn btn--outline btn--light" href="#trifuerza">Empieza el viaje</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- ============ TRIFUERZA ============ -->
+    <section class="section" id="trifuerza">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Capítulo I</p>
+          <h2 class="h2 reveal">La Trifuerza</h2>
+          <p class="lead reveal">Tres diosas crearon el mundo y dejaron atrás una reliquia dorada. Quien la toque verá cumplido su deseo. Toca un fragmento para conocer a su portador.</p>
+          <div class="tri-info card" aria-live="polite">
+            <p class="tri-info__empty">Elige un fragmento del triángulo.</p>
+          </div>
+        </div>
+        <div class="tri-wrap">
+          <svg class="tri" viewBox="0 0 300 260" role="group" aria-label="Fragmentos de la Trifuerza">
+            <g class="tri__piece" data-piece="poder" tabindex="0" role="button" aria-label="Trifuerza del Poder">
+              <path d="M150 10 220 130H80Z"/>
+            </g>
+            <g class="tri__piece" data-piece="sabiduria" tabindex="0" role="button" aria-label="Trifuerza de la Sabiduría">
+              <path d="M80 130 150 250H10Z"/>
+            </g>
+            <g class="tri__piece" data-piece="valor" tabindex="0" role="button" aria-label="Trifuerza del Valor">
+              <path d="M220 130 290 250H150Z"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ORIGEN ============ -->
+    <section class="section section--night" id="origen">
+      <div class="wrap origin">
+        <div class="origin__sticky">
+          <p class="eyebrow eyebrow--light">Capítulo II</p>
+          <h2 class="h2 h2--light">El origen de la leyenda</h2>
+          <p class="origin__count"><span class="origin__n">01</span> / <span class="origin__total">05</span></p>
+          <div class="origin__bar" aria-hidden="true"><i></i></div>
+          <p class="lead lead--light">Antes de Link y Zelda hubo diosas, una guerra y una maldición. Baja para leer la historia completa.</p>
+        </div>
+        <ol class="origin__steps"></ol>
+      </div>
+    </section>
+
+    <!-- ============ CRONOLOGÍA ============ -->
+    <section class="section section--paper" id="cronologia">
+      <div class="wrap">
+        <p class="eyebrow">Capítulo III</p>
+        <h2 class="h2 reveal">Una historia, tres destinos</h2>
+        <p class="lead reveal">Al final de <em>Ocarina of Time</em> la historia se parte en tres. Elige una rama del árbol y abre cada juego.</p>
+
+        <div class="tl">
+          <svg class="tl__tree" viewBox="0 0 900 220" role="group" aria-label="Árbol de la cronología">
+            <path class="tl__line" data-branch="origen" d="M30 110 H330"/>
+            <path class="tl__line" data-branch="adulto" d="M330 110 C400 110 410 40 480 40 H760"/>
+            <path class="tl__line" data-branch="nino" d="M330 110 H760"/>
+            <path class="tl__line" data-branch="caida" d="M330 110 C400 110 410 180 480 180 H760"/>
+            <path class="tl__line tl__line--dash" data-branch="despertar" d="M760 40 C820 40 820 110 870 110 M760 110 H870 M760 180 C820 180 820 110 870 110"/>
+            <g class="tl__node" data-branch="origen" tabindex="0" role="button"><circle cx="180" cy="110" r="10"/><text x="180" y="88">Origen</text></g>
+            <g class="tl__node" data-branch="adulto" tabindex="0" role="button"><circle cx="600" cy="40" r="10"/><text x="600" y="22">Héroe adulto</text></g>
+            <g class="tl__node" data-branch="nino" tabindex="0" role="button"><circle cx="600" cy="110" r="10"/><text x="600" y="92">Héroe niño</text></g>
+            <g class="tl__node" data-branch="caida" tabindex="0" role="button"><circle cx="600" cy="180" r="10"/><text x="600" y="210">Caída del héroe</text></g>
+            <g class="tl__node" data-branch="despertar" tabindex="0" role="button"><circle cx="870" cy="110" r="10"/><text x="870" y="140">Despertar</text></g>
+          </svg>
+
+          <div class="chips" role="tablist" aria-label="Ramas de la cronología"></div>
+          <p class="tl__desc" aria-live="polite"></p>
+          <div class="tl__games"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PUEBLOS ============ -->
+    <section class="section" id="pueblos">
+      <div class="wrap">
+        <p class="eyebrow">Capítulo IV</p>
+        <h2 class="h2 reveal">Los pueblos de Hyrule</h2>
+        <p class="lead reveal">Siete pueblos comparten el reino. Elige uno para conocer su hogar, sus costumbres y a sus héroes.</p>
+        <div class="races">
+          <div class="races__tabs" role="tablist" aria-label="Pueblos"></div>
+          <article class="races__panel card" role="tabpanel" aria-live="polite"></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MAPA ============ -->
+    <section class="section section--night" id="mapa">
+      <div class="wrap">
+        <p class="eyebrow eyebrow--light">Capítulo V</p>
+        <h2 class="h2 h2--light reveal">El reino de Hyrule</h2>
+        <p class="lead lead--light reveal">Cada región guarda un pueblo y una historia. Pulsa los puntos del mapa.</p>
+
+        <div class="map">
+          <svg class="map__svg" viewBox="0 0 800 520" role="group" aria-label="Mapa interactivo de Hyrule">
+            <defs>
+              <pattern id="paperGrain" width="6" height="6" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r=".6" fill="#000" opacity=".06"/>
+              </pattern>
+            </defs>
+            <path d="M80 90 Q200 30 380 50 Q600 20 720 110 Q780 230 730 360 Q680 480 470 490 Q260 500 140 430 Q40 340 60 210Z" fill="#e9e0c6" stroke="#b9a983" stroke-width="2"/>
+            <path d="M80 90 Q200 30 380 50 Q600 20 720 110 Q780 230 730 360 Q680 480 470 490 Q260 500 140 430 Q40 340 60 210Z" fill="url(#paperGrain)"/>
+            <!-- desierto -->
+            <path d="M70 300 Q120 260 210 290 Q250 360 200 430 Q130 430 80 360Z" fill="#e3c88f"/>
+            <!-- montaña -->
+            <path d="M520 70 Q620 40 700 110 Q690 190 600 190 Q530 170 520 70Z" fill="#c9a98f"/>
+            <path d="M580 160 610 90 640 160Z" fill="#8b6a58"/>
+            <!-- bosque -->
+            <path d="M560 300 Q640 270 700 320 Q700 410 620 430 Q550 410 560 300Z" fill="#a9c49a"/>
+            <!-- lago -->
+            <path d="M330 400 Q400 370 460 410 Q450 460 380 465 Q320 450 330 400Z" fill="#9ccbe0"/>
+            <!-- dominio zora -->
+            <path d="M640 200 Q700 210 720 250" stroke="#7fb6d3" stroke-width="10" fill="none" stroke-linecap="round"/>
+            <path d="M720 250 Q600 260 520 330 Q470 380 450 410" stroke="#7fb6d3" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <!-- castillo -->
+            <path d="M370 230h60v40h-60z M380 200h12v30h-12z M408 200h12v30h-12z" fill="#6b6a76"/>
+            <text class="map__label" x="400" y="292">Ciudadela</text>
+            <g class="map__pins"></g>
+            <path d="M720 460 l0 -30 M710 446 720 430 730 446" stroke="#6b5d42" stroke-width="2" fill="none"/>
+            <text x="712" y="476" class="map__label">N</text>
+          </svg>
+          <article class="map__card card card--dark" aria-live="polite">
+            <p class="map__empty">Selecciona una región.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RELIQUIAS ============ -->
+    <section class="section section--paper" id="reliquias">
+      <div class="wrap">
+        <p class="eyebrow">Capítulo VI</p>
+        <h2 class="h2 reveal">Reliquias legendarias</h2>
+        <p class="lead reveal">Objetos que cambiaron el destino del reino. Ábrelos para saber de dónde vienen y qué poder tienen.</p>
+        <div class="relics"></div>
+      </div>
+      <dialog class="relic-dialog" aria-labelledby="relic-title">
+        <form method="dialog"><button class="relic-dialog__close" aria-label="Cerrar">×</button></form>
+        <div class="relic-dialog__body"></div>
+      </dialog>
+    </section>
+
+    <!-- ============ PERSONAJES ============ -->
+    <section class="section section--night section--edge" id="personajes">
+      <div class="wrap">
+        <p class="eyebrow">Capítulo VII</p>
+        <h2 class="h2 reveal">Los que vuelven siempre</h2>
+        <p class="lead reveal">Los mismos espíritus renacen en cada era. Gira las cartas.</p>
+        <div class="cards"></div>
+      </div>
+    </section>
+
+    <!-- ============ TEST ============ -->
+    <section class="section section--paper" id="test">
+      <div class="wrap wrap--narrow">
+        <p class="eyebrow">Epílogo</p>
+        <h2 class="h2 reveal">¿Qué fragmento llevas?</h2>
+        <p class="lead reveal">Tres preguntas. La Trifuerza elige por ti.</p>
+        <div class="quiz card" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p class="footer__big">Es peligroso ir solo. Lleva esto contigo.</p>
+      <p class="footer__small">Proyecto escolar fan sin ánimo de lucro. <em>The Legend of Zelda</em> y sus personajes son marcas de Nintendo. Esta web no está afiliada a Nintendo. Imágenes del hero, el mapa, las regiones y los personajes aportadas por el autor; arte y mapa propiedad de Nintendo. Música y efectos compuestos con Web Audio.</p>
+      <p class="footer__small">Animación: GSAP + ScrollTrigger. Estilo: Refero Styles. Sistema: UI UX Pro Max.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/lore.js"></script>
+  <script src="js/hero.js"></script>
+</body>
+</html>
