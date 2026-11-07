@@ -481,13 +481,3 @@ em { font-style: italic; }
 .relic-dialog[open]::backdrop { animation: relic-fade .3s ease-out; }
 @keyframes relic-pop { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
 @keyframes relic-fade { from { opacity: 0; } to { opacity: 1; } }
-
-/* Secuencia de frames del vídeo: mismas capas oscura e iluminada que las fotos */
-.shot__seq { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
-.shot.is-seq .shot__seq { display: block; }
-.shot.is-seq .shot__frame, .shot.is-seq .shot__glow { display: none; }
-.shot__seq--base { filter: brightness(var(--base)) saturate(.6); }
-.shot__seq--lit {
-  -webkit-mask-image: radial-gradient(calc(var(--r) * 1%) calc(var(--r) * 1%) at calc(var(--lx) * 1%) calc(var(--ly) * 1%), #000 45%, transparent 100%);
-          mask-image: radial-gradient(calc(var(--r) * 1%) calc(var(--r) * 1%) at calc(var(--lx) * 1%) calc(var(--ly) * 1%), #000 45%, transparent 100%);
-}

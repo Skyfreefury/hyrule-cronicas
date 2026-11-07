@@ -37,15 +37,6 @@ zelda/
 - La música y los efectos están compuestos en código con Web Audio y se sincronizan con la timeline.
 - Con `prefers-reduced-motion` no hay pin y se muestra la imagen revelada.
 
-## Hero con vídeo (frames)
-
-1. Exporta el vídeo del desenvainado (de Blender o de otra herramienta), vertical 3:4 y con fondo oscuro.
-2. Ejecuta `python tools/extract_frames.py ruta/video.mp4 --frames 90`.
-3. El script crea `assets/hero/frames/` (WebP de escritorio y de móvil + `manifest.json`).
-4. El hero detecta `manifest.json` y reproduce los frames con el scroll. Sin esa carpeta usa las dos fotos.
-
-Requiere `pip install imageio-ffmpeg pillow`.
-
 ## Cambiar imágenes por las del juego
 
 Basta con sustituir los archivos manteniendo el nombre. No hace falta tocar código.

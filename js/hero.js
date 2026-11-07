@@ -11,55 +11,7 @@
   const st = { base: 0.04, r: 10, lx: 37, ly: 62, swap: 0, blade: 0, glow: 0.4, core: 0, zoom: 1.15, dust: 0.4 };
   const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
 
-  // ---------- Secuencia de frames (opcional) ----------
-  // Si existe assets/hero/frames/manifest.json, el desenvainado se reproduce frame a frame
-  // con el scroll (st.swap 0 -> 1 recorre la secuencia) en lugar del fundido entre dos fotos.
-  const seq = { on: false, imgs: [], last: -1, cBase: document.querySelector(".shot__seq--base"), cLit: document.querySelector(".shot__seq--lit") };
-  async function loadSequence() {
-    const dir = "assets/hero/frames/";
-    let m;
-    try {
-      const res = await fetch(dir + "manifest.json", { cache: "no-cache" });
-      if (!res.ok) return;
-      m = await res.json();
-    } catch (e) { return; }
-    const prefix = matchMedia("(max-width: 700px)").matches ? m.mobile : m.desktop;
-    const src = (i) => `${dir}${prefix}${String(i + 1).padStart(4, "0")}.${m.ext}`;
-    seq.imgs = Array.from({ length: m.count }, () => null);
-    // Primero el frame inicial; luego el resto en segundo plano.
-    const load = (i) => new Promise((ok) => {
-      const im = new Image();
-      im.decoding = "async";
-      im.onload = () => { seq.imgs[i] = im; ok(); };
-      im.onerror = ok;
-      im.src = src(i);
-    });
-    await load(0);
-    const first = seq.imgs[0];
-    if (!first) return;
-    [seq.cBase, seq.cLit].forEach((c) => { c.width = first.naturalWidth; c.height = first.naturalHeight; });
-    shot.style.aspectRatio = `${m.width} / ${m.height}`;
-    shot.classList.add("is-seq");
-    seq.on = true;
-    seq.last = -1;
-    paint();
-    for (let i = 1; i < m.count; i++) load(i).then(() => { if (seq.last === -1 || Math.abs(i - seq.last) < 2) paint(); });
-  }
-  function drawSequence() {
-    if (!seq.on) return;
-    const n = seq.imgs.length;
-    let i = Math.round(st.swap * (n - 1));
-    // Si el frame aún no ha cargado, usa el más cercano ya disponible.
-    let j = i;
-    for (let d = 0; d < n && !seq.imgs[j]; d++) j = seq.imgs[i - d] ? i - d : seq.imgs[i + d] ? i + d : j;
-    if (!seq.imgs[j] || j === seq.last) return;
-    seq.last = j;
-    [seq.cBase, seq.cLit].forEach((c) => c.getContext("2d").drawImage(seq.imgs[j], 0, 0, c.width, c.height));
-  }
-  loadSequence();
-
   function paint() {
-    drawSequence();
     shot.style.setProperty("--base", st.base.toFixed(3));
     shot.style.setProperty("--r", st.r.toFixed(2));
     shot.style.setProperty("--lx", st.lx.toFixed(2));
@@ -149,6 +101,9 @@
     return;
   }
 
+  // Respiración de la luz de la guarda mientras no se hace scroll.
+  const idle = gsap.to(st, { r: 13, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: -1, onUpdate: paint });
+
   gsap.from(".hero__intro > *", { y: 24, opacity: 0, duration: 1.2, stagger: 0.12, ease: "power3.out", delay: 0.5 });
 
   const marks = [[1.0, "draw"], [2.2, "glow"]];
@@ -163,7 +118,9 @@
       document.dispatchEvent(new CustomEvent("hero-progress", { detail: this.progress() }));
     },
     scrollTrigger: {
-      trigger: ".hero", start: "top top", end: "+=260%", scrub: 1, pin: true, anticipatePin: 1, refreshPriority: 1
+      trigger: ".hero", start: "top top", end: "+=260%", scrub: 1, pin: true, anticipatePin: 1, refreshPriority: 1,
+      onEnter: () => idle.pause(),
+      onLeaveBack: () => idle.resume()
     }
   });
 
