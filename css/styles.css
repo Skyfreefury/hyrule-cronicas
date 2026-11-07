@@ -79,47 +79,58 @@ em { font-style: italic; }
 /* Fondo oscuro bajo el hero fijado: evita ver la sección siguiente si la ventana crece en móvil */
 .pin-spacer:has(> .hero) { background: var(--night); }
 .hero__stage { position: relative; height: 100%; overflow: hidden; }
-/* Plano del hero: misma imagen en 3 capas (oscura, iluminada por la espada, brillo) */
+/* Plano del hero: 2 poses 3:4 en capas (oscura e iluminada), fundido de una a otra y brillo de la hoja */
 .shot {
-  --base: .05; --r: 12; --blade: 100; --glow: .45; --core: 0; --zoom: 1.18;
-  /* Posición en la imagen (en %): centro de la hoja, guarda y cara. Se cambian en index.html */
-  --sx: 50; --hilt: 57; --face: 36;
+  --base: .04; --r: 10; --lx: 37; --ly: 62; --swap: 0; --blade: 0; --glow: .4; --core: 0; --zoom: 1.15;
+  /* Hoja en % de la imagen (se cambian en index.html): centro, guarda y boca de la vaina */
+  --bx: 36.6; --bt: 60; --bb: 72;
   position: absolute; left: 50%; top: 50%;
-  width: max(100%, 177.78svh); aspect-ratio: 16 / 9;
+  height: 100%; aspect-ratio: 3 / 4;
   transform: translate(-50%, -50%) scale(var(--zoom));
-  transform-origin: calc(var(--sx) * 1%) calc(var(--face) * 1% - 2%);
+  transform-origin: calc(var(--lx) * 1%) calc(var(--ly) * 1%);
   perspective: 1400px;
   opacity: 0; transition: opacity 1.6s var(--ease);
 }
+/* En pantallas anchas la foto vertical se funde con el negro por los lados */
+@media (min-aspect-ratio: 3/4) {
+  .shot {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  }
+}
 .hero-ready .shot { opacity: 1; }
 .shot__tilt { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
+.shot__frame { position: absolute; inset: 0; }
+.shot__frame--b { opacity: var(--swap); }
 .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; user-select: none; pointer-events: none; }
-.shot__base { filter: brightness(var(--base)) saturate(.7); }
+.shot__base { filter: brightness(var(--base)) saturate(.6); }
+/* Luz de la espada: elipse que crece desde la guarda hasta envolver al personaje */
 .shot__lit {
-  -webkit-mask-image: radial-gradient(calc(var(--r) * 1%) calc(var(--r) * 1.5%) at calc(var(--sx) * 1%) calc(var(--face) * 1%), #000 35%, transparent 100%);
-          mask-image: radial-gradient(calc(var(--r) * 1%) calc(var(--r) * 1.5%) at calc(var(--sx) * 1%) calc(var(--face) * 1%), #000 35%, transparent 100%);
+  filter: brightness(1.04) contrast(1.05);
+  -webkit-mask-image: radial-gradient(calc(var(--r) * 1%) calc(var(--r) * 1%) at calc(var(--lx) * 1%) calc(var(--ly) * 1%), #000 45%, transparent 100%);
+          mask-image: radial-gradient(calc(var(--r) * 1%) calc(var(--r) * 1%) at calc(var(--lx) * 1%) calc(var(--ly) * 1%), #000 45%, transparent 100%);
 }
-/* Brillo de la hoja: franja central que se enciende de la guarda (y 57%) hacia la punta */
+/* Brillo de la hoja: franja que se enciende desde la boca de la vaina hacia la guarda */
 .shot__glow {
-  mix-blend-mode: screen; opacity: var(--glow);
-  filter: blur(10px) brightness(1.35) saturate(1.4);
+  mix-blend-mode: screen; opacity: calc(var(--glow) * var(--swap));
+  filter: blur(8px) brightness(1.5) saturate(1.3) hue-rotate(-8deg);
   -webkit-mask-image:
-    linear-gradient(to right, transparent calc(var(--sx) * 1% - 7%), #000 calc(var(--sx) * 1% - 1.4%), #000 calc(var(--sx) * 1% + 1.4%), transparent calc(var(--sx) * 1% + 7%)),
-    linear-gradient(to bottom, transparent calc(var(--hilt) * 1% - var(--blade) * var(--hilt) * .0105% - 5%), #000 calc(var(--hilt) * 1% - var(--blade) * var(--hilt) * .0105%), #000 calc(var(--hilt) * 1% + 1%), transparent calc(var(--hilt) * 1% + 9%));
+    linear-gradient(to right, transparent calc(var(--bx) * 1% - 5%), #000 calc(var(--bx) * 1% - 1.8%), #000 calc(var(--bx) * 1% + 1.8%), transparent calc(var(--bx) * 1% + 5%)),
+    linear-gradient(to top, transparent calc(100% - var(--bb) * 1% - 1%), #000 calc(100% - var(--bb) * 1%), #000 calc(100% - var(--bb) * 1% + (var(--bb) - var(--bt)) * var(--blade) * .01%), transparent calc(100% - var(--bb) * 1% + (var(--bb) - var(--bt)) * var(--blade) * .01% + 4%));
   -webkit-mask-composite: source-in;
           mask-image:
-    linear-gradient(to right, transparent calc(var(--sx) * 1% - 7%), #000 calc(var(--sx) * 1% - 1.4%), #000 calc(var(--sx) * 1% + 1.4%), transparent calc(var(--sx) * 1% + 7%)),
-    linear-gradient(to bottom, transparent calc(var(--hilt) * 1% - var(--blade) * var(--hilt) * .0105% - 5%), #000 calc(var(--hilt) * 1% - var(--blade) * var(--hilt) * .0105%), #000 calc(var(--hilt) * 1% + 1%), transparent calc(var(--hilt) * 1% + 9%));
+    linear-gradient(to right, transparent calc(var(--bx) * 1% - 5%), #000 calc(var(--bx) * 1% - 1.8%), #000 calc(var(--bx) * 1% + 1.8%), transparent calc(var(--bx) * 1% + 5%)),
+    linear-gradient(to top, transparent calc(100% - var(--bb) * 1% - 1%), #000 calc(100% - var(--bb) * 1%), #000 calc(100% - var(--bb) * 1% + (var(--bb) - var(--bt)) * var(--blade) * .01%), transparent calc(100% - var(--bb) * 1% + (var(--bb) - var(--bt)) * var(--blade) * .01% + 4%));
           mask-composite: intersect;
 }
-/* Línea de energía que recorre la hoja al encenderse */
+/* Línea de energía que sube por la hoja al desenvainar */
 .shot__core {
-  position: absolute; left: calc(var(--sx) * 1%); bottom: calc(100% - var(--hilt) * 1%); width: .45%;
-  height: calc(var(--blade) * var(--hilt) * .01%);
+  position: absolute; left: calc(var(--bx) * 1%); bottom: calc(100% - var(--bb) * 1%); width: .55%;
+  height: calc((var(--bb) - var(--bt)) * var(--blade) * .01%);
   transform: translateX(-50%);
-  background: linear-gradient(to top, #fff 0%, #dff6ff 70%, rgba(170,225,255,0) 100%);
+  background: linear-gradient(to top, #fff 0%, #e6f8ff 70%, rgba(170,225,255,0) 100%);
   border-radius: 4px;
-  box-shadow: 0 0 18px 6px rgba(150, 215, 255, .8), 0 0 60px 20px rgba(80, 160, 255, .45);
+  box-shadow: 0 0 16px 5px rgba(150, 215, 255, .85), 0 0 60px 22px rgba(80, 160, 255, .45);
   opacity: var(--core); mix-blend-mode: screen;
 }
 .dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }

@@ -35,13 +35,19 @@
   <section class="hero" id="inicio" aria-label="Introducción">
     <div class="hero__stage">
 
-      <!-- Para cambiar la imagen: sustituye assets/hero/link.jpg (16:9, fondo negro) y ajusta
-           --sx (centro de la hoja), --hilt (altura de la guarda) y --face (altura de la cara), en % de la imagen. -->
-      <div class="shot" aria-hidden="true" style="--sx: 50; --hilt: 56; --face: 26;">
+      <!-- Dos poses (3:4): pose-a con la espada envainada, pose-b desenvainando.
+           Posiciones en % de la imagen: --bx centro de la hoja, --bt guarda, --bb boca de la vaina. -->
+      <div class="shot" aria-hidden="true" style="--bx: 36.6; --bt: 60; --bb: 72;">
         <div class="shot__tilt">
-          <img class="shot__base" src="assets/hero/link.jpg" alt="" width="1678" height="937" fetchpriority="high">
-          <img class="shot__lit" src="assets/hero/link.jpg" alt="" width="1678" height="937">
-          <img class="shot__glow" src="assets/hero/link.jpg" alt="" width="1678" height="937">
+          <div class="shot__frame">
+            <img class="shot__base" src="assets/hero/pose-a.jpg" srcset="assets/hero/pose-a-m.jpg 900w, assets/hero/pose-a.jpg 1493w" sizes="(max-width: 700px) 140vw, 75vh" alt="" width="1493" height="2000" fetchpriority="high">
+            <img class="shot__lit" src="assets/hero/pose-a.jpg" srcset="assets/hero/pose-a-m.jpg 900w, assets/hero/pose-a.jpg 1493w" sizes="(max-width: 700px) 140vw, 75vh" alt="" width="1493" height="2000">
+          </div>
+          <div class="shot__frame shot__frame--b">
+            <img class="shot__base" src="assets/hero/pose-b.jpg" srcset="assets/hero/pose-b-m.jpg 900w, assets/hero/pose-b.jpg 1493w" sizes="(max-width: 700px) 140vw, 75vh" alt="" width="1493" height="2000">
+            <img class="shot__lit" src="assets/hero/pose-b.jpg" srcset="assets/hero/pose-b-m.jpg 900w, assets/hero/pose-b.jpg 1493w" sizes="(max-width: 700px) 140vw, 75vh" alt="" width="1493" height="2000">
+          </div>
+          <img class="shot__glow" src="assets/hero/pose-b.jpg" srcset="assets/hero/pose-b-m.jpg 900w, assets/hero/pose-b.jpg 1493w" sizes="(max-width: 700px) 140vw, 75vh" alt="" width="1493" height="2000">
           <span class="shot__core"></span>
         </div>
       </div>

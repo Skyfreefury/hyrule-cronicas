@@ -1,5 +1,5 @@
-// Hero cinemático: Link en la oscuridad, la Espada Maestra se enciende con el scroll
-// y su luz lo revela. Capas de la misma imagen + máscaras CSS + GSAP ScrollTrigger.
+// Hero cinemático: el héroe en la oscuridad desenvaina con el scroll; la hoja se enciende
+// y su luz lo revela. Dos poses en capas + máscaras CSS + GSAP ScrollTrigger.
 (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const shot = document.querySelector(".shot");
@@ -7,13 +7,16 @@
   const dust = document.querySelector(".dust");
   const sfx = (name) => document.dispatchEvent(new CustomEvent("sfx", { detail: name }));
 
-  // Estado visual: brillo base, radio de luz, encendido de la hoja, brillo, zoom.
-  const st = { base: 0.05, r: 12, blade: 100, glow: 0.45, core: 0, zoom: 1.18, dust: 0.5 };
+  // Estado visual: brillo base, radio y centro de la luz, fundido entre poses, hoja, brillo, zoom.
+  const st = { base: 0.04, r: 10, lx: 37, ly: 62, swap: 0, blade: 0, glow: 0.4, core: 0, zoom: 1.15, dust: 0.4 };
   const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
 
   function paint() {
     shot.style.setProperty("--base", st.base.toFixed(3));
     shot.style.setProperty("--r", st.r.toFixed(2));
+    shot.style.setProperty("--lx", st.lx.toFixed(2));
+    shot.style.setProperty("--ly", st.ly.toFixed(2));
+    shot.style.setProperty("--swap", st.swap.toFixed(3));
     shot.style.setProperty("--blade", st.blade.toFixed(2));
     shot.style.setProperty("--glow", st.glow.toFixed(3));
     shot.style.setProperty("--core", st.core.toFixed(3));
@@ -92,14 +95,14 @@
   img.complete ? show() : img.addEventListener("load", show);
 
   if (reduce) {
-    Object.assign(st, { base: 0.5, r: 160, blade: 100, glow: 0.5, core: 0, zoom: 1, dust: 0.6 });
+    Object.assign(st, { base: 0.08, r: 58, lx: 50, ly: 40, swap: 1, blade: 100, glow: 0.6, core: 0, zoom: 1, dust: 0.6 });
     paint();
     gsap.set(".hero__hint", { autoAlpha: 0 });
     return;
   }
 
-  // Respiración de la espada mientras no se hace scroll.
-  const idle = gsap.to(st, { glow: 0.6, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: -1, onUpdate: paint });
+  // Respiración de la luz de la guarda mientras no se hace scroll.
+  const idle = gsap.to(st, { r: 13, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: -1, onUpdate: paint });
 
   gsap.from(".hero__intro > *", { y: 24, opacity: 0, duration: 1.2, stagger: 0.12, ease: "power3.out", delay: 0.5 });
 
@@ -121,19 +124,20 @@
     }
   });
 
-  // 1. La oscuridad se cierra y la cámara se acerca
+  // 1. La oscuridad se cierra y la cámara se acerca a la empuñadura
   tl.to(".hero__intro", { y: "-=40", opacity: 0, duration: 0.8 }, 0)
     .to(".hero__hint", { opacity: 0, duration: 0.4 }, 0)
-    .to(st, { glow: 0.12, r: 7, zoom: 1.26, dust: 0.2, duration: 1 }, 0)
+    .to(st, { r: 7, zoom: 1.28, dust: 0.2, duration: 1 }, 0)
 
-  // 2. La hoja se enciende desde la guarda hasta la punta
-    .fromTo(st, { blade: 0 }, { blade: 100, duration: 1.2, ease: "power2.in", immediateRender: false }, 1)
-    .to(st, { glow: 1, core: 1, dust: 1, duration: 1.2, ease: "power2.in" }, 1)
+  // 2. Desenvaina: cambia de pose y la hoja se enciende desde la vaina hacia la guarda
+    .to(st, { swap: 1, duration: 0.7, ease: "power2.inOut" }, 1)
+    .fromTo(st, { blade: 0 }, { blade: 100, duration: 1.1, ease: "power2.in", immediateRender: false }, 1.1)
+    .to(st, { glow: 1, core: 1, r: 16, dust: 1, duration: 1.1, ease: "power2.in" }, 1.1)
 
-  // 3. Destello: la luz revela a Link
-    .to(".flash", { opacity: 0.55, duration: 0.18, ease: "power2.in" }, 2.2)
+  // 3. Destello: la luz sube a la cara y revela al héroe; el fondo sigue en sombra
+    .to(".flash", { opacity: 0.5, duration: 0.18, ease: "power2.in" }, 2.2)
     .to(".flash", { opacity: 0, duration: 0.6, ease: "power2.out" }, 2.38)
-    .to(st, { r: 170, base: 0.45, zoom: 1, glow: 0.55, core: 0, duration: 1.5, ease: "power3.out" }, 2.25)
+    .to(st, { r: 58, lx: 50, ly: 40, base: 0.08, zoom: 1, glow: 0.6, core: 0, duration: 1.5, ease: "power3.out" }, 2.25)
 
   // 4. Mensaje final
     .fromTo(".hero__final", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }, 3.6)
