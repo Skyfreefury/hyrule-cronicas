@@ -30,9 +30,8 @@ zelda/
 ## Cómo funciona el hero
 
 - La sección se fija (pin) durante un 260% de scroll y una timeline GSAP con `scrub` avanza con la rueda.
-- Dos poses (`assets/hero/pose-a.jpg` envainada y `pose-b.jpg` desenvainando, 3:4) se apilan en capas: oscura (`brightness`) e iluminada con máscara radial.
-- Con el scroll se funde de una pose a otra, la hoja se enciende desde la vaina hacia la guarda, hay un destello y la luz sube hasta la cara. El fondo queda en sombra.
-- La posición de la hoja se ajusta con `--bx`, `--bt` y `--bb` en el `style` de `.shot`.
+- La misma imagen se apila en 3 capas: oscura (`brightness`), iluminada con máscara radial y brillo de la hoja con `mix-blend-mode: screen`.
+- Con el scroll la hoja se enciende de la guarda a la punta, hay un destello y la luz revela a Link.
 - Un canvas 2D dibuja polvo de luz con profundidad. El ratón inclina la escena para dar sensación 3D.
 - La música y los efectos están compuestos en código con Web Audio y se sincronizan con la timeline.
 - Con `prefers-reduced-motion` no hay pin y se muestra la imagen revelada.
@@ -43,14 +42,14 @@ Basta con sustituir los archivos manteniendo el nombre. No hace falta tocar cód
 
 | Archivo | Uso | Formato recomendado |
 |---|---|---|
-| `assets/hero/pose-a.jpg` y `pose-b.jpg` | Hero (envainada y desenvainando) | 3:4 vertical, mismo encuadre en las dos |
+| `assets/hero/link.jpg` | Hero | 16:9, fondo negro, espada vertical en el centro |
 | `assets/map/hyrule.jpg` | Mapa real (sustituye al dibujo SVG) | Cualquier proporción, mínimo 1600 px de ancho |
 | `assets/regions/<id>.jpg` | Foto de cada región | 16:10 horizontal |
 | `assets/characters/<id>.jpg` | Carta de personaje | 3:4 vertical, cara en el tercio superior |
 
 - Ids de región: `castillo`, `muerte`, `zora`, `gerudo`, `bosque`, `kakariko`, `hylia`, `orni`.
 - Ids de personaje: `link`, `zelda`, `ganon`, `impa`.
-- Hero: si la hoja no cae en el mismo sitio, ajusta `--bx` (centro), `--bt` (guarda) y `--bb` (boca de la vaina) en el `style` de `.shot` en `index.html`.
+- Hero: si la espada o la cara no caen en el mismo sitio, ajusta `--sx`, `--hilt` y `--face` en el `style` de `.shot` en `index.html`.
 - Mapa: abre `index.html?editar`, arrastra los pines a su sitio y copia las coordenadas `mx`/`my` del cuadro de texto a `js/data.js`.
 - Créditos: cambia `credit` (enlace) y `creditLabel` (texto) de cada región en `js/data.js`.
 - Las imágenes oficiales son propiedad de Nintendo. Cítalas en el pie de página.
